@@ -6,9 +6,11 @@ import fireDB from '../fireConfig'
 import { fireproducts } from '../data';
 import { async } from '@firebase/util';
 import '../stylesheet/Homepage.css'
+import { useDispatch, useSelector } from 'react-redux';
 
 function Homepage() {
   const [products, setProducts] = useState([])
+
 
 
   async function addData() {
@@ -50,6 +52,19 @@ function Homepage() {
   useEffect(() => {
     getData()
   }, [])
+
+
+  const {cartItems} = useSelector(state=>state.cartReducer)
+  const dispatch =useDispatch()
+
+  useEffect(()=>{
+    localStorage.setItem('cartItems',JSON.stringify(cartItems))
+  },[cartItems])
+
+  const addToCart=(product)=>{
+    dispatch({type:'ADD_TO_CART',payload:product})
+  }
+
   return (
     <Layout>
       <div className='mt-2'>
@@ -75,7 +90,7 @@ function Homepage() {
               <div className='product-action'>
                 <h2>{product.price} Rs</h2>
                 <div className='d-flex'> 
-                  <button className='btn btn-primary mx-2'>Add To Cart</button>
+                  <button className='btn btn-primary mx-2' onClick={()=>addToCart(product)}>Add To Cart</button>
                   <button className='btn btn-primary'>View</button>
                 </div>
               </div>
