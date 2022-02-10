@@ -52,7 +52,7 @@ function Homepage() {
   }, [])
   return (
     <Layout>
-      <div>
+      <div className='mt-2'>
         <button className='btn btn-success mx-3' onClick={addProductData}>Add Data</button>
         <button className='btn btn-success' onClick={getData}>Get data from firebasae</button>
       </div>
